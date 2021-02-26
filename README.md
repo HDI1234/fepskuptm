@@ -1,6 +1,6 @@
-## MU Question Bank 
+## KUPTM Final Exam Paper Storage System
 
-Web application using PHP and CodeIgniter Framework.
+Web application using PHP and CodeIgniter 3.0 Framework.
 
 ### Features
 
@@ -19,24 +19,12 @@ User interface consists of several features pointed as :
 *  Search Question By Categories
 *  Download Question If Necessary
 
-<hr>
-
-### Demo
-
-YouTube link : https://www.youtube.com/watch?v=Dy8Nks_QNvE
-
-
-<hr>
-
-<p>[User login page]</p>
-<img src="assets/demo/login.png" width="80%" height="80%">
-<p>[Home page view]</p>
-<img src="assets/demo/home.png" width="80%" height="80%">
-<p>[User dashboard view]</p>
-<img src="assets/demo/user_dashboard.png" width="80%" height="80%">
-<p>[Update page view]</p>
-<img src="assets/demo/update_page.png" width="80%" height="80%">
-
+Security features consists of :
+*  Token-Based Registration
+*  Token-Based Password Reset
+*  Email Verification
+*  Password Encryption (SHA/MD5)
+*  Input Sanitization  
 <hr>
 
 
