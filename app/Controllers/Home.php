@@ -8,6 +8,7 @@ class home extends CI_Controller {
   	{
   		parent::__construct();
 		$this->load->model('question_model','qmodel');
+		$this->roles = $this->config->item('roles');
   	}
 
 	public function submit()
@@ -172,12 +173,6 @@ class home extends CI_Controller {
 		$this->load->view('addQuestion');
 		
 	}
-	public function forgetPassword()
-	{
-		
-		$this->load->view('forgetPassword');
-		
-	}
 	public function contacts()
 	{
 		
@@ -202,11 +197,11 @@ class home extends CI_Controller {
 
 		if($result){
 			
-			$this->session->set_flashdata("success_msg"," Record updated successfully ");
+			$this->session->set_flashdata("success"," Record updated successfully ");
 
 		}else{
 
-			$this->session->set_flashdata("error_msg"," Fail to update record");
+			$this->session->set_flashdata("error"," Fail to update record");
 		}
 
 		redirect(base_url('admin/profile'));
@@ -219,11 +214,11 @@ class home extends CI_Controller {
 
 		if($result){
 			
-			$this->session->set_flashdata("success_msg"," Record deleted successfully");
+			$this->session->set_flashdata("success"," Record deleted successfully");
 
 		}else{
 
-			$this->session->set_flashdata("error_msg"," Fail to delete record");
+			$this->session->set_flashdata("error"," Fail to delete record");
 		}
 
 		redirect(base_url('admin/profile'));
@@ -416,54 +411,34 @@ class home extends CI_Controller {
 
 			if($finalResponse['success'])
 			{
-				$result=$this->qmodel->register();
-				$email=$this->input->post('email');
-				if($result){
+				$clean = $this->security->xss_clean($this->input->post(NULL, TRUE));
+				$result=$this->qmodel->register($clean);
+				$token = $this->qmodel->insertToken($result);
+				
+				$qstring = $this->base64url_encode($token);                    
+                $url = site_url() . 'main/complete/token/' . $qstring;
+                $link = '<a href="' . $url . '">' . $url . '</a>';
 
-					if ($this->qmodel->sendEmail($email))
-					{
-						// successfully sent mail
-						$this->session->set_flashdata('msg','<div class="alert alert-success text-center">Please verify your email address to  complete your registration.</div>');
-						redirect("home/login","refresh");
-					}
-					else
-					{
-						// error
-						$this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Oops! Error. Please try again.</div>');
-						redirect("home/login","refresh");
-					}
-					redirect("home/login","refresh");
+				if($result){
+					$this->session->set_flashdata('success', 'Your account has been registered. Click this link to verify:' . $link);
+					redirect("home/login");
 				}
 				else {
-					$this->session->set_flashdata("error_msg"," Fail to register new account");
+					$this->session->set_flashdata("error"," Fail to register new account");
 				}
 			}
 			else
 			{
-				$this->session->set_flashdata("error_msg"," Fail to register new account");
+				$this->session->set_flashdata("error"," Fail to register new account");
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata("error_msg"," Fail to register new account");
+			$this->session->set_flashdata("error"," Fail to register new account");
 		}
 
   		$this->load->view('register');
   	}
-
-	function verify($hash=NULL)
-	{
-		if ($this->qmodel->verifyEmailID($hash))
-		{
-			$this->session->set_flashdata('verify_msg','<div class="alert alert-success text-center">Your Email Address is successfully verified! Please login to access your account!</div>');
-			redirect("home/login","refresh");
-		}
-		else
-		{
-			$this->session->set_flashdata('verify_msg','<div class="alert alert-danger text-center">Sorry! There is error verifying your Email Address!</div>');
-			redirect("home/login","refresh");
-		}
-	}
 	
 	function email_check($str)
 	{
@@ -477,4 +452,12 @@ class home extends CI_Controller {
 			return FALSE;
 		}
 	}
+
+	public function base64url_encode($data) { 
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+	  } 
+  
+	  public function base64url_decode($data) { 
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+	  }  
 }

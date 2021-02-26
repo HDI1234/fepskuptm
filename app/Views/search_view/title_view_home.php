@@ -18,14 +18,14 @@
      <?php 
 
 
-          if($this->session->flashdata('success_msg'))
+          if($this->session->flashdata('success'))
           {
 
         ?>
 
         <div class="alert alert-success">
               
-              <?php echo $this->session->flashdata('success_msg'); ?>
+              <?php echo $this->session->flashdata('success'); ?>
 
         </div>
 
@@ -56,7 +56,7 @@
        <?php 
 
 
-          if($this->session->flashdata('success_msg'))
+          if($this->session->flashdata('success'))
           {
 
         ?>

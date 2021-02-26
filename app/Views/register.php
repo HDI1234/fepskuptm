@@ -118,22 +118,6 @@
                                 </div><br>
       </div><br>
 
-      <div class="form-group">
-                                <label class="col-md-2" id="la_id3">Password</label>
-
-                                <div class="col-md-10">
-                                     <input type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Must be at least 5 characters">
-                                </div><br>
-      </div><br>
-    
-      <div class="form-group">
-                                <label class="col-md-2" id="la_id4">Confirm Password</label>
-
-                                <div class="col-md-10">
-                                      <input type="password" class="form-control" name="password2" id="password2" autocomplete="off" placeholder="Must be the same as above">
-                                </div><br>
-      </div><br>
-
      <div class="form-group">
                                 <label class="col-md-2" id="la_id5">Email</label>
 

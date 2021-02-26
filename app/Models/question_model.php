@@ -3,6 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class question_model extends CI_Model {
 
+	public $status;
+    
+    function __construct(){
+        // Call the Model constructor
+        parent::__construct();        
+        $this->status = $this->config->item('status');
+    }    
+
    
 	public function getQuestion()
 	{
@@ -354,21 +362,24 @@ class question_model extends CI_Model {
 
    public function register()
     {
+		$student_id = $_POST['student_id'];
 
     	$data=array(
-			'student_id'=>$_POST['student_id'],
+			'student_id'=>$student_id,
 			'full_name'=>$_POST['full_name'],
-			'password'=>md5($_POST['password']),
+			'password'=>'',
 			'email'=>$_POST['email'],
 			'course'=>$_POST['course'],
-			'faculty'=>$_POST['faculty']
+			'faculty'=>$_POST['faculty'],
+			'last_login'=> '',
+			'status'=>$this->status[0]
   			);
 
   		$this->db->insert('student',$data);
 
 		if($this->db->affected_rows()>0){
 
-			return true;
+			return $student_id;
 		}
 		else
 		{
@@ -376,32 +387,39 @@ class question_model extends CI_Model {
 		}
     }
 
-	public function sendEmail($to_email)
-    {
-		$this->load->library('email');
+	public function insertToken($username)
+    {   
+        $token = substr(sha1(rand()), 0, 30); 
+        $date = date('d-m-Y');
+        
+        $string = array(
+                'token'=> $token,
+                'username'=>$username,
+                'created'=>$date
+            );
 
-		$config['protocol'] = 'sendmail';
-		$config['mailpath'] = '/usr/sbin/sendmail';
-		$config['charset'] = 'iso-8859-1';
-		$config['wordwrap'] = TRUE;
-
-		$this->email->initialize($config);
-
-		$this->email->from('hasanaldaniel@gmail.com', 'FEPS KUPTM');
-		$this->email->to($to_email);
-
-		$this->email->subject('Verify Your Email Address');
-		$this->email->message('Dear User,<br /><br />Please click on the below activation link to verify your email address.<br /><br /> http://localhost/user/verify/' . md5($to_email) . '<br /><br /><br />Thanks<br />FEPS KUPTM Team');
-
-        return $this->email->send();
+        $query = $this->db->insert_string('tokens',$string);
+        $this->db->query($query);
+        return $token . $username;
+        
     }
-    
-    //activate user account
-    function verifyEmailID($key)
-    {
-        $data = array('status' => 1);
-        $this->db->where('md5(email)', $key);
-        return $this->db->update('user', $data);
-    }
+
+	public function getPassword($student_id){
+
+		$this->db->select("email");
+		$this->db->from("student");
+		$this->db->where('student_id',$student_id);
+		$query=$this->db->get();
+		return $query->result();
+
+	}
+
+	public function updatePassword($student_id,$newPassword){
+		
+		$update=$this->db->query("UPDATE student SET password='$newPassword' WHERE student_id='$student_id'");
+
+		return $update->result();
+
+	}
 
 }
