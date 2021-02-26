@@ -82,19 +82,19 @@
 
    <div class="text-center mb-5">
 
-                            <h6 class="h3">Update Password</h6>
+        <h5>Hello <span><?php echo $full_name; ?></span>. Your email address is <span><?php echo $email;?></span></h5>
    </div><br><br>
 
    
 
-   <form action="<?php echo base_url();?>home/changePassword" method="post">
+   <form action="<?php echo base_url();?>home/complete/token/<?php echo $token; ?>" method="post">
 
 
       <div class="form-group">
                                 <label class="col-md-2" id="la_id1">New Password</label>
 
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="newPassword" id="newPassword" placeholder="Must be more than 5 characters">
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Must be more than 5 characters">
                                 </div><br>
       </div><br>
 
@@ -102,13 +102,13 @@
                                 <label class="col-md-2" id="la_id1">Confirm New Password</label>
 
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="cNewPassword" id="cNewPassword" placeholder="Must be the same as above">
+                                    <input type="password" class="form-control" name="passwordConf" id="passwordConf" placeholder="Must be the same as above">
                                 </div><br>
       </div><br>
-
+    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" >
    <div class="text-center mb-3">
    <br> <br>
-                                <button  type="submit" name="btn_change" class="btn btn-block btn-primary">Update Password</button>
+                                <button  type="submit" name="Complete" class="btn btn-block btn-primary">Update Password</button>
     </div>
   </form>
      </div>

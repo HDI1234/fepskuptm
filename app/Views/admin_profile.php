@@ -81,7 +81,7 @@
                 </div>
 
                 <ul class="nav navbar-nav ">
-                  <li ><a href="<?php echo base_url();?>user/admin_profile">Home</a></li>
+                  <li ><a href="<?php echo base_url();?>admin/profile">Home</a></li>
                   <li><a href="<?php echo base_url();?>home/contacts">Contacts</a></li>
                 </ul>
 

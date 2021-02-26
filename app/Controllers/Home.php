@@ -3,13 +3,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class home extends CI_Controller {
 
+	public $status; 
 
     function __construct()
   	{
   		parent::__construct();
 		$this->load->model('question_model','qmodel');
-		$this->roles = $this->config->item('roles');
+		$this->load->library('form_validation');    
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		$this->status = $this->config->item('status');
   	}
+
+	public function index()
+	{
+
+		if(isset($_SESSION['user_logged'])==False)
+  	 	{
+  			$this->session->set_flashdata("error","Please login first to view this page.");
+  	 		redirect("home/login","refresh");
+  	 	}
+
+		$data['questionInfo']=$this->qmodel->getQuestion();
+
+		$this->load->view('login',$data);
+	}
 
 	public function submit()
 	{
@@ -33,22 +50,6 @@ class home extends CI_Controller {
             redirect(base_url('admin/profile'));
         }
 		
-		
-	}
-
-	public function index()
-	{
-
-		if(isset($_SESSION['user_logged'])==False)
-  	 	{
-  			$this->session->set_flashdata("error","Please login first to view this page.");
-  	 		redirect("home/login","refresh");
-  	 	}
-		$data['questionInfo']=$this->qmodel->getQuestion();
-		//print_r($data);
-		//$this->load->view('view_home',$data);
-		$this->load->view('admin_profile',$data);
-	    //$this->load->view('profile',$data);
 		
 	}
 
@@ -324,7 +325,7 @@ class home extends CI_Controller {
             } 
             else{
 
-            	$this->session->set_flashdata("error_msg_download"," Fail to download record");
+            	$this->session->set_flashdata("error"," Fail to download record");
 
             }         
             
@@ -341,21 +342,21 @@ class home extends CI_Controller {
   		if($this->form_validation->run()== True)
   		{
 
-  			$user=$this->qmodel->login();
-
-  			if($user){
-
-  				$this->session->set_flashdata("success","You are logged in");
-
-  				$_SESSION['user_logged']=True;
-  				$_SESSION['student_id']=$user->student_id;
-
-
-  			    redirect("user/profile","refresh");
-  			}
+			$post = $this->input->post(NULL,TRUE);  
+			$clean = $this->security->xss_clean($post);
+			
+			$userInfo = $this->qmodel->checkLogin($clean);
+			
+			if(!$userInfo){
+				$this->session->set_flashdata('error', 'The login was unsuccessful');
+				redirect("home/login","refresh");
+			}                
 			else{
-  				$this->session->set_flashdata("error","No such account exists in database");
-  			}
+				$_SESSION['user_logged']=True;
+  				$_SESSION['student_id']= $userInfo->student_id;
+			}
+
+			redirect("user/profile","refresh");
 
   		}
 
@@ -375,8 +376,6 @@ class home extends CI_Controller {
 		if(isset($_POST['btn_register'])){
 			$this->form_validation->set_rules('student_id','Student ID','required');
 			$this->form_validation->set_rules('full_name','Full Name','required');
-			$this->form_validation->set_rules('password','Password','required|min_length[5]');
-			$this->form_validation->set_rules('password','Confirm Password','required|min_length[5]|matches[password]');
 			$this->form_validation->set_rules('email','Email','required|valid_email|callback_email_check');
 			$this->form_validation->set_rules('course','Course','required');
 			$this->form_validation->set_rules('faculty','Faculty','required');
@@ -409,18 +408,29 @@ class home extends CI_Controller {
 
 			$finalResponse = json_decode($receiveData, true);
 
-			if($finalResponse['success'])
+			if($finalResponse['success'] && !$this->qmodel->isDuplicate($this->input->post('email')))
 			{
 				$clean = $this->security->xss_clean($this->input->post(NULL, TRUE));
 				$result=$this->qmodel->register($clean);
 				$token = $this->qmodel->insertToken($result);
 				
 				$qstring = $this->base64url_encode($token);                    
-                $url = site_url() . 'main/complete/token/' . $qstring;
+                $url = base_url() . 'home/complete/token/' . $qstring;
                 $link = '<a href="' . $url . '">' . $url . '</a>';
+				$email = $this->input->post('email');
 
 				if($result){
-					$this->session->set_flashdata('success', 'Your account has been registered. Click this link to verify:' . $link);
+
+					$this->session->set_flashdata('success', 'Your account has been registered. Check your email to verify account.');
+
+					$this->load->library('email');
+					$this->email->from('hasanaldaniel@gmail.com', 'KUPTM FEPS');
+					$this->email->to($email);
+					$this->email->subject('Account Verification');
+					$this->email->message('Click this link to verify account: ' . $link);
+					$this->email->set_newline("\r\n");
+					$this->email->send();
+
 					redirect("home/login");
 				}
 				else {
@@ -429,12 +439,12 @@ class home extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata("error"," Fail to register new account");
+				$this->session->set_flashdata("error"," Fail to register new account. Email already existed.");
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata("error"," Fail to register new account");
+			$this->session->set_flashdata("error"," Fail to register new account. Fail to verify Captcha.");
 		}
 
   		$this->load->view('register');
@@ -455,9 +465,154 @@ class home extends CI_Controller {
 
 	public function base64url_encode($data) { 
 		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-	  } 
+	} 
   
-	  public function base64url_decode($data) { 
+	public function base64url_decode($data) { 
 		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
-	  }  
+	}
+
+	
+	public function complete()
+	{                                   
+		$token = base64_decode($this->uri->segment(4));       
+		$cleanToken = $this->security->xss_clean($token);
+		
+		$user_info = $this->qmodel->isTokenValid($cleanToken); //either false or array();           
+		
+		if(!$user_info){
+			$this->session->set_flashdata('error', 'Token is invalid or expired');
+			redirect(base_url().'home/login');
+		}            
+		$data = array(
+			'full_name'=> $user_info->full_name, 
+			'email'=>$user_info->email, 
+			'user_id'=>$user_info->id, 
+			'token'=>$this->base64url_encode($token)
+		);
+		
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+		$this->form_validation->set_rules('passwordConf', 'Password Confirmation', 'required|matches[password]');              
+		
+		if ($this->form_validation->run() == FALSE) {  
+			$this->session->set_flashdata('error', 'Sampai sini dah'); 
+			$this->load->view('completeReg', $data);
+		}else{
+			
+			$this->load->library('password');                 
+			$post = $this->input->post(NULL, TRUE);
+			
+			$cleanPost = $this->security->xss_clean($post);
+			
+			$hashed = $this->password->create_hash($cleanPost['password']);
+			echo $cleanPost['password'];                
+			$cleanPost['password'] = $hashed;
+			echo $cleanPost['password'];
+			unset($cleanPost['passwordConf']);
+			$userInfo = $this->qmodel->updateUserInfo($cleanPost);
+			
+			if(!$userInfo){
+				$this->session->set_flashdata('error', 'There was a problem updating your record');
+				redirect(base_url().'home/login');
+			}
+			
+			unset($userInfo->password);
+			
+			foreach($userInfo as $key=>$val){
+				$this->session->set_userdata($key, $val);
+			}
+			redirect(base_url().'home/');
+			
+		}
+	}
+
+	public function forgot()
+	{
+		
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email'); 
+		
+		if($this->form_validation->run() == FALSE) {
+			$this->load->view('forgetPassword');
+		}else{
+			$email = $this->input->post('email');  
+			$clean = $this->security->xss_clean($email);
+			$userInfo = $this->qmodel->getUserInfoByEmail($clean);
+			
+			if(!$userInfo){
+				$this->session->set_flashdata('error', 'We cant find your email address');
+				redirect(base_url().'home/login');
+			}   
+			
+			if($userInfo->status != $this->status[1]){ //if status is not approved
+				$this->session->set_flashdata('error', 'Your account is not in approved status');
+				redirect(base_url().'home/login');
+			}
+			
+			//build token 
+			
+			$token = $this->qmodel->insertToken($userInfo->id);                        
+			$qstring = $this->base64url_encode($token);                  
+			$url = base_url() . 'home/reset_password/token/' . $qstring;
+			$link = '<a href="' . $url . '">' . $url . '</a>'; 
+			
+			$message = '';                     
+			$message .= '<strong>A password reset has been requested for this email account</strong><br>';
+			$message .= '<strong>Please click:</strong> ' . $link;             
+
+			$this->load->library('email');
+			$this->email->from('hasanaldaniel@gmail.com', 'KUPTM FEPS');
+			$this->email->to($email);
+			$this->email->subject('Reset Password');
+			$this->email->message($message);
+			$this->email->set_newline("\r\n");
+			if($this->email->send()){
+				$this->session->set_flashdata('success', 'Check your email to recover your account.');
+				redirect("home/login","refresh");
+			}
+			
+			redirect("home/login","refresh");
+			
+		}
+		
+	}
+
+	public function reset_password()
+	{
+		$token = $this->base64url_decode($this->uri->segment(4));                  
+		$cleanToken = $this->security->xss_clean($token);
+		
+		$user_info = $this->qmodel->isTokenValid($cleanToken); //either false or array();               
+		
+		if(!$user_info){
+			$this->session->set_flashdata('error', 'Token is invalid or expired');
+			redirect(base_url().'home/login');
+		}            
+		$data = array(
+			'full_name'=> $user_info->full_name, 
+			'email'=>$user_info->email, 
+			//'student_id'=>$user_info->student_id, 
+			'token'=>$this->base64url_encode($token)
+		);
+		
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+		$this->form_validation->set_rules('passwordConf', 'Password Confirmation', 'required|matches[password]');              
+		
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('resetPassword', $data);
+		}else{
+							
+			$this->load->library('password');                 
+			$post = $this->input->post(NULL, TRUE);                
+			$cleanPost = $this->security->xss_clean($post);                
+			$hashed = $this->password->create_hash($cleanPost['password']);                
+			$cleanPost['password'] = $hashed;
+			$cleanPost['user_id'] = $user_info->id;
+			unset($cleanPost['passwordConf']);                
+			if(!$this->qmodel->updatePassword($cleanPost)){
+				$this->session->set_flashdata('error', 'There was a problem updating your password');
+			}else{
+				$this->session->set_flashdata('success', 'Your password has been updated. You may now login');
+			}
+			redirect(base_url().'home/login');                
+		}
+	}
 }

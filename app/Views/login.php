@@ -5,7 +5,7 @@
 
 <?php }elseif(isset($_SESSION['admin_logged'])){  ?>
 <?php
-    redirect("admin/admin_profile");}
+    redirect("admin/profile");}
 ?>
 
 <!doctype html>
@@ -129,7 +129,7 @@
      </div>
      <div class="text-center">
                                 <small>Forgot Password?</small>
-                                <a href="<?php echo base_url();?>home/forgetpassword" class="small font-weight-bold">Click here</a>
+                                <a href="<?php echo base_url();?>home/forgot" class="small font-weight-bold">Click here</a>
      </div>
 
   </form>

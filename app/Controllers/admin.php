@@ -50,7 +50,7 @@ class admin extends CI_Controller {
         
         if($admin){
 
-          $this->session->set_flashdata("success_admin","You are logged in");
+          $this->session->set_flashdata("success","You are logged in");
 
           $_SESSION['admin_logged']=True;
           $_SESSION['username']=$admin->username;
@@ -60,7 +60,7 @@ class admin extends CI_Controller {
 
         }else{
 
-          $this->session->set_flashdata("error_admin","No such account exists in database");
+          $this->session->set_flashdata("error","No such account exists in database");
 
         }
 
@@ -78,7 +78,7 @@ class admin extends CI_Controller {
   		if(isset($_SESSION['admin_logged'])==False)
   	 	{
 
-  			$this->session->set_flashdata("error_adLoginFirst","Please login first to view this page!!");
+  			$this->session->set_flashdata("error","Please login first to view this page.");
   	 		redirect("admin/admin_login","refresh");
   	 	}
        //index();

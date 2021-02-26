@@ -82,32 +82,40 @@
 
    <div class="text-center mb-5">
 
-                            <h6 class="h3">Forgot Password</h6>
+                            <h6 class="h3">Update Password</h6>
    </div><br><br>
 
    
 
-   <form action="<?php echo base_url();?>home/forgot" method="post">
+   <form action="<?php echo base_url();?>home/reset_password/token/<?php echo $token; ?>" method="post">
 
 
       <div class="form-group">
-                                <label class="col-md-2" id="la_id1">Student Email</label>
+                                <label class="col-md-2" id="la_id1">New Password</label>
 
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Student Email">
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Must be more than 5 characters">
+                                </div><br>
+      </div><br>
+
+      <div class="form-group">
+                                <label class="col-md-2" id="la_id1">Confirm New Password</label>
+
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" name="passwordConf" id="passwordConf" placeholder="Must be the same as above">
                                 </div><br>
       </div><br>
 
    <div class="text-center mb-3">
    <br> <br>
-                                <button  type="submit" name="btn_reset" class="btn btn-block btn-primary">Reset Password</button>
+                                <button  type="submit" name="btn_change" class="btn btn-block btn-primary">Update Password</button>
     </div>
   </form>
      </div>
        </div>
      </div>
    </div>
-   
+
  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 
