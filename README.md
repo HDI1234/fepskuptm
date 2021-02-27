@@ -29,13 +29,13 @@ YouTube link : https://www.youtube.com/watch?v=Dy8Nks_QNvE
 <hr>
 
 <p>[User login page]</p>
-<img src="assets/demo/login.png" width="80%" height="80%">
+<img src="assets//demo/login.png" width="80%" height="80%">
 <p>[Home page view]</p>
-<img src="assets/demo/home.png" width="80%" height="80%">
+<img src="assets//demo/home.png" width="80%" height="80%">
 <p>[User dashboard view]</p>
-<img src="assets/demo/user_dashboard.png" width="80%" height="80%">
+<img src="assets//demo/user_dashboard.png" width="80%" height="80%">
 <p>[Update page view]</p>
-<img src="assets/demo/update_page.png" width="80%" height="80%">
+<img src="assets//demo/update_page.png" width="80%" height="80%">
 
 <hr>
 
