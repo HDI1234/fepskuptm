@@ -8,8 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets//css/font-awesome.min.css">
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets//css/bootstrap1.min.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap1.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
 
@@ -17,11 +17,11 @@
 
     <style type="text/css">
       body {
-     background-color: white;
+      padding-top:200px;
+      background-color: white;
     }
     #divMain {
       padding-left: 350px;
-      padding-top: 120px;
       padding-right: 10px;
     }
     #la_id1{
@@ -32,6 +32,12 @@
       padding-left: 10px;
       padding-top: 8px;
     }
+    #logo-main{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 25%;
+    }
     </style>
 
 
@@ -40,10 +46,10 @@
 
     <br>
 
-
-        <div class="container h-100vh d-flex align-items-center" id="divMain">
+    <img src="<?php echo base_url(); ?>assets/images/logo.png" alt="Logo KUPTM" id="logo-main">
+        <div class="container w-auto h-50 d-flex justify-content-center" id="divMain">
             <div class="col">
-                <div class="row justify-content-center">
+                <div class="d-flex justify-content-center">
                     <div class="col-md-8 col-lg-6">
                       <span class="clearfix"></span>
 
@@ -75,8 +81,6 @@
 
 
       <?php  echo validation_errors('<div class="alert alert-danger">','</div>') ?>
-
-      <centre><img src="<?php echo base_url(); ?>assets//images/logo.png" alt="Logo KUPTM"  class="img-fluid"></centre>
 
    <div class="text-center mb-5">
 
@@ -121,8 +125,8 @@
   <a class="fa fa-user" href="<?php echo base_url();?>home/login"></a>
 </button>
    
- <script type="text/javascript" src="<?php echo base_url(); ?>assets//js/jquery.js"></script>
- <script type="text/javascript" src="<?php echo base_url(); ?>assets//js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 
   </body>
 </html>

@@ -1,4 +1,4 @@
-## MU Question Bank 
+## FEPS KUPTM
 
 Web application using PHP and CodeIgniter Framework.
 
@@ -18,24 +18,6 @@ User interface consists of several features pointed as :
 *  Search Question By Keywords
 *  Search Question By Categories
 *  Download Question If Necessary
-
-<hr>
-
-### Demo
-
-YouTube link : https://www.youtube.com/watch?v=Dy8Nks_QNvE
-
-
-<hr>
-
-<p>[User login page]</p>
-<img src="assets//demo/login.png" width="80%" height="80%">
-<p>[Home page view]</p>
-<img src="assets//demo/home.png" width="80%" height="80%">
-<p>[User dashboard view]</p>
-<img src="assets//demo/user_dashboard.png" width="80%" height="80%">
-<p>[Update page view]</p>
-<img src="assets//demo/update_page.png" width="80%" height="80%">
 
 <hr>
 
