@@ -232,8 +232,8 @@ class question_model extends CI_Model {
 		
 
 		$field=array('title'=>$this->input->post('title'),
-					 'course'=>$this->input->post('code'),
-					 'faculty'=>$this->input->post('dept'),
+					 'course'=>$this->input->post('course'),
+					 'faculty'=>$this->input->post('faculty'),
 					 'type'=>$this->input->post('type'),
 					 'year'=>$this->input->post('year'),
 					 'file_name'=>$filename

@@ -19,7 +19,6 @@ class home extends CI_Controller {
 
 		if(isset($_SESSION['user_logged'])==False)
   	 	{
-  			$this->session->set_flashdata("error","Please login first to view this page.");
   	 		redirect("home/login","refresh");
   	 	}
 

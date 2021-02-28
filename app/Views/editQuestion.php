@@ -116,12 +116,9 @@
       <br> <br>
 
  
-       <form action="<?php echo base_url();?>home/update" method="POST" class="form-horizontal">
+       <form action="<?php echo base_url();?>home/update" method="POST" class="form-horizontal" enctype="multipart/form-data">
 
       <input type="hidden" name="text_hidden" value="<?php echo $editQn->paper_id; ?>">
-     <!-- <h5><?php //echo $editQn->paper_id; ?></h5>
-     -->
-
 
       <div class="form-group">
                                 <label class="col-md-2">Title</label>
@@ -137,7 +134,7 @@
       <div class="form-group">
                                 <label class="col-md-2">Course Code</label>
                                 <div class="col-md-10">
-                                    <input type="text" value="<?php echo $editQn->course; ?>" class="form-control" name="code" id="code" placeholder="Ex:  CSE 340" required>
+                                    <input type="text" value="<?php echo $editQn->course; ?>" class="form-control" name="course" id="course" placeholder="Ex:  CSE 340" required>
                                 </div>
       </div>
 
@@ -146,7 +143,7 @@
       <div class="form-group">
                                 <label class="col-md-2">Department</label>
                                 <div class="col-md-10">
-                                    <input type="text" value="<?php echo $editQn->faculty; ?>" class="form-control" name="dept" id="dept" placeholder="Ex: CSE" required>
+                                    <input type="text" value="<?php echo $editQn->faculty; ?>" class="form-control" name="faculty" id="faculty" placeholder="Ex: CSE" required>
                                 </div>
       </div>
 
