@@ -22,14 +22,14 @@ class admin extends CI_Controller {
 
 
         $this->session->set_flashdata("error","Please login first to view this page!!");
-      //    redirect("home/login","refresh");
+      
       }
 
     $data['questionInfo']=$this->qmodel->getQuestion();
-    //print_r($data);
+    
     $this->load->view('admin_profile',$data);
 
-    //
+    
 
       
     

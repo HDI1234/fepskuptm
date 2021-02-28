@@ -150,7 +150,6 @@
                               <optgroup label="Question's Type">
                                   <option value="<?php echo base_url();?>home/searchOrderByMidterm">Midterm</option>
                                   <option value="<?php echo base_url();?>home/searchOrderByFinal" >Final</option>
-                                  <!-- <a href="<?php echo base_url();?>home/searchOrderByFinal" -->
                             </optgroup>
 
                                <optgroup label="Question's Year">
@@ -228,8 +227,8 @@
         </section>
 
 <br><br>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets//js/jquery.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets//js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
    
     $(document).ready(function(){
