@@ -193,19 +193,25 @@ class home extends CI_Controller {
 	public function update()
 	{
 
-		$result=$this->qmodel->update();
+		$config['upload_path'] = 'uploads/files/';
+        $config['allowed_types'] = 'gif|jpg|png|pdf';
+		
+		$this->load->library('upload', $config);
 
+		if (!$this->upload->do_upload('file')) 
+		{
+            $error = array('error' => $this->upload->display_errors());
 
-		if($result){
-			
+            $this->load->view('admin_profile', $error);
+        } 
+		else 
+		{
+			$filename = $this->upload->file_name;
+            $result=$this->qmodel->update($filename);
 			$this->session->set_flashdata("success"," Record updated successfully ");
 
-		}else{
-
-			$this->session->set_flashdata("error"," Fail to update record");
-		}
-
-		redirect(base_url('admin/profile'));
+            redirect(base_url('admin/profile'));
+        }
 	}
 	
 	public function delete($id)

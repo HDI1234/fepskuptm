@@ -224,7 +224,7 @@ class question_model extends CI_Model {
 	}
 	
 
-	public function update()
+	public function update($filename)
 	{
 
 
@@ -236,7 +236,7 @@ class question_model extends CI_Model {
 					 'faculty'=>$this->input->post('dept'),
 					 'type'=>$this->input->post('type'),
 					 'year'=>$this->input->post('year'),
-					 'file_name'=>$this->input->post('file')
+					 'file_name'=>$filename
 					);
 
 		
