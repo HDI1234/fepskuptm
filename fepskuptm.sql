@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2021 at 09:40 AM
+-- Generation Time: Feb 28, 2021 at 08:10 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -61,25 +61,12 @@ CREATE TABLE `paper` (
 --
 
 INSERT INTO `paper` (`paper_id`, `title`, `course`, `year`, `faculty`, `type`, `file_name`) VALUES
-(1, 'Data', 'NEt404', 2019, 'FCOM', 'Final', ''),
 (2, 'Data Structure', 'NEt404', 2019, 'FCOM', 'Final', 'Basic_LR2.pdf'),
 (3, 'Data Structure', 'NEt404', 2019, 'FCOM', 'Final', 'Basic_LR_(1).pdf'),
 (4, 'Azf', 'asdsad', 2019, 'FCOM', 'Final', 'WTCMY54132704.pdf'),
 (5, 'Azf', 'asdsad', 2019, 'FCOM', 'Final', 'WTCMY541327041.pdf'),
-(6, 'asdasd', 'asdasd', 2019, 'FBASS', 'Final', 'WTCMY541327042.pdf');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sessions`
---
-
-CREATE TABLE `sessions` (
-  `id` varchar(40) NOT NULL,
-  `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `data` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(6, 'asdasd', 'asdasd', 2019, 'FBASS', 'Final', 'WTCMY541327042.pdf'),
+(7, 'Final Year Project', 'FYP101', 2019, 'FCOM', 'Midterm', 'FYP123.pdf');
 
 -- --------------------------------------------------------
 
@@ -88,9 +75,10 @@ CREATE TABLE `sessions` (
 --
 
 CREATE TABLE `student` (
+  `id` int(12) NOT NULL,
   `student_id` varchar(12) NOT NULL,
   `full_name` varchar(225) NOT NULL,
-  `password` varchar(225) NOT NULL,
+  `password` text NOT NULL,
   `email` varchar(200) NOT NULL,
   `course` varchar(200) NOT NULL,
   `faculty` varchar(200) NOT NULL,
@@ -102,13 +90,9 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_id`, `full_name`, `password`, `email`, `course`, `faculty`, `last_login`, `status`) VALUES
-('AM0101005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'kl1901005016@student.kuptm.edu.my', 'BE202', 'IGS', '', 'pending'),
-('AM0301005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'kl1901005016@student.kuptm.edu.my', 'CC101', 'FEHA', '', 'pending'),
-('AM0601005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'KL1901005016@student.kuptm.edu.my', 'ACCA', 'IGS', '', 'pending'),
-('AM0701005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'KL1901005016@student.kuptm.edu.my', 'CT205', 'IGS', '', 'pending'),
-('AM1001005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'KL1901005016@student.kuptm.edu.my', 'ACCA', 'FCOM', '', 'pending'),
-('AM1901005016', 'Adam Ibrahim Bin Jamaludin', '4297f44b13955235245b2497399d7a93', 'KL1901005016@student.kuptm.edu.my', 'ACCA', 'FEHA', '', '');
+INSERT INTO `student` (`id`, `student_id`, `full_name`, `password`, `email`, `course`, `faculty`, `last_login`, `status`) VALUES
+(17, 'AM1901005016', 'Adam Ibrahim Bin Jamaludin', 'sha256:1000:3NcHKC2ad5TBLOLw2+/C6u8Cby+de43u:4QT10OXZEtYz8tonjmrOh2Y1n9y9FVQo', 'kl1901005016@student.kuptm.edu.my', 'ACCA', 'FEHA', '2021-02-26 07:36:02 PM', 'approved'),
+(18, 'AM1901005042', 'Mohamad Azim Bin Abd Kadir', 'sha256:1000:04AqnFTu0D6ePkaWe+PeuNRECgbWa4FS:h1fmVqI5ZSJxJ0m3o+g54sGAKZEPf8EL', 'kl1901005042@student.kuptm.edu.my', 'CT205', 'FCOM', '2021-02-28 07:35:21 AM', 'approved');
 
 -- --------------------------------------------------------
 
@@ -119,7 +103,7 @@ INSERT INTO `student` (`student_id`, `full_name`, `password`, `email`, `course`,
 CREATE TABLE `tokens` (
   `id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `username` varchar(225) NOT NULL,
+  `user_id` int(10) NOT NULL,
   `created` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,12 +111,11 @@ CREATE TABLE `tokens` (
 -- Dumping data for table `tokens`
 --
 
-INSERT INTO `tokens` (`id`, `token`, `username`, `created`) VALUES
-(26, 'f3ff0dd9955ab1c28a68da7c9522e1', '1', '0000-00-00'),
-(27, '2095f6a681b1ae687b50b76dc0472d', '0', '0000-00-00'),
-(28, '3e22f8752d052332b53eecb32a9d2b', 'AM0101005016', '0000-00-00'),
-(29, '9f23b86d9d215e383a120f0735387d', 'AM0601005016', '0000-00-00'),
-(30, 'c61cd46433600c879507e8f87f2e75', 'AM0701005016', '0000-00-00');
+INSERT INTO `tokens` (`id`, `token`, `user_id`, `created`) VALUES
+(73, '815af2f309f327b145207ed0f5a815', 16, '2021-02-26'),
+(74, '4c0c1837fb4badb53c070eed425bdf', 17, '2021-02-26'),
+(75, '0acb8290b3a4cb4904060de6b2c4c1', 17, '2021-02-26'),
+(76, 'a0578a772fde4a0692ba95a9c600f6', 18, '2021-02-28');
 
 --
 -- Indexes for dumped tables
@@ -151,17 +134,11 @@ ALTER TABLE `paper`
   ADD PRIMARY KEY (`paper_id`);
 
 --
--- Indexes for table `sessions`
---
-ALTER TABLE `sessions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ci_sessions_timestamp` (`timestamp`);
-
---
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`student_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `tokens`
@@ -183,13 +160,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `paper`
 --
 ALTER TABLE `paper`
-  MODIFY `paper_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `paper_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `student`
+--
+ALTER TABLE `student`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
