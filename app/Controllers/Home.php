@@ -192,6 +192,14 @@ class home extends CI_Controller {
 	public function update()
 	{
 
+		if(isset($_POST['btn_register'])){
+			$this->form_validation->set_rules('student_id','Student ID','required');
+			$this->form_validation->set_rules('full_name','Full Name','required');
+			$this->form_validation->set_rules('email','Email','required|valid_email|callback_email_check');
+			$this->form_validation->set_rules('course','Course','required');
+			$this->form_validation->set_rules('faculty','Faculty','required');
+		}
+
 		$config['upload_path'] = 'uploads/files/';
         $config['allowed_types'] = 'gif|jpg|png|pdf';
 		
@@ -499,7 +507,6 @@ class home extends CI_Controller {
 		$this->form_validation->set_rules('passwordConf', 'Password Confirmation', 'required|matches[password]');              
 		
 		if ($this->form_validation->run() == FALSE) {  
-			$this->session->set_flashdata('error', 'Sampai sini dah'); 
 			$this->load->view('completeReg', $data);
 		}else{
 			

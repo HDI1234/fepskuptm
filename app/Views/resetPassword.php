@@ -94,7 +94,7 @@
                                 <label class="col-md-2" id="la_id1">New Password</label>
 
                                 <div class="col-md-10">
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Must be more than 5 characters">
+                                <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[~`!@#$%\^&*()\-_=+[\]{};:\x27.,\x22\\|/?><]).{8,}" name="password" required id="password" title="Must contain at least one number and one uppercase and lowercase letter, and also 1 special character, and at least 8 or more characters">
                                 </div><br>
       </div><br>
 
@@ -102,7 +102,7 @@
                                 <label class="col-md-2" id="la_id1">Confirm New Password</label>
 
                                 <div class="col-md-10">
-                                    <input type="password" class="form-control" name="passwordConf" id="passwordConf" placeholder="Must be the same as above">
+                                <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[~`!@#$%\^&*()\-_=+[\]{};:\x27.,\x22\\|/?><]).{8,}" name="passwordConf" required id="passwordConf" title="Must contain at least one number and one uppercase and lowercase letter, and also 1 special character, and at least 8 or more characters">
                                 </div><br>
       </div><br>
 
