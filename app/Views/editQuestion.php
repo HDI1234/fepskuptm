@@ -2,11 +2,11 @@
 <html>
 <head>
   <title>Edit Question</title>
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"> 
-  <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap.min.css"> 
+  <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/font-awesome.min.css">
 
   -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap1.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap1.min.css">
   <head>
    
     <meta charset="utf-8">
@@ -157,28 +157,12 @@
                                 <div class="col-md-10">
                                     
                                     <select name="type" id="type" class="form-control">
-                                      <?php 
-
-                                         if($editQn->type=="Class Test")
-                                         {
-                                          ?> 
-                                             <option selected value="Class Test">Class Test</option>
-
-                                              <option value="Midterm">Midterm</option>
-                                              <option value="Final">Final</option>
-                                        <?php     
-                                         }
-
-                                      ?>
-
-
                                        <?php 
 
                                          if($editQn->type=="Midterm")
                                          {
                                           ?> 
                                               <option selected value="Midterm">Midterm</option>
-                                               <option value="Class Test">Class Test</option>
                                                 <option value="Final">Final</option>
 
                                         <?php     
@@ -192,7 +176,6 @@
                                           ?> 
                                               <option selected value="Final">Final</option>
                                                <option value="Midterm">Midterm</option>
-                                               <option value="Class Test">Class Test</option>
 
                                         <?php     
                                          }

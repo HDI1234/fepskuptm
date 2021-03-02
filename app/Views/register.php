@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap1.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap1.min.css">
 
 
     <style type="text/css">
@@ -198,8 +198,8 @@
 </main>
 
    
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
 
 
   </body>

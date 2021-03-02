@@ -8,8 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap1.min.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap1.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
 
@@ -46,7 +46,7 @@
 
     <br>
 
-    <img src="<?php echo base_url(); ?>assets/images/logo.png" alt="Logo KUPTM" id="logo-main">
+    <img src="<?php echo base_url(); ?>images/logo.png" alt="Logo KUPTM" id="logo-main">
         <div class="container w-auto h-50 d-flex justify-content-center" id="divMain">
             <div class="col">
                 <div class="d-flex justify-content-center">
@@ -125,8 +125,8 @@
   <a class="fa fa-user" href="<?php echo base_url();?>home/login"></a>
 </button>
    
- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.js"></script>
+ <script type="text/javascript" src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
 
   </body>
 </html>

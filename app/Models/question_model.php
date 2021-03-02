@@ -108,20 +108,6 @@ class question_model extends CI_Model {
 		//return $this->db->get();
 
 	}
-	public function searchOrderByClassTest()
-	{
-
-
-		$this->db->select("*");
-		$this->db->from("paper");
-		$this->db->where('type','Class Test');
-		//$this->db->order_by('title','ASC');
-		$query=$this->db->get();
-		return $query->result();
-
-		//return $this->db->get();
-
-	}
 
 	public function searchOrderByMidterm()
 	{

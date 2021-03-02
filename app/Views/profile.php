@@ -56,7 +56,7 @@
     padding-top: 25px;
   }
   #table_text{
-    color: white;
+    color: black;
   }
 
   body{
@@ -130,7 +130,7 @@
 
                        <?php   }  ?>
 
-                          <h3 align="left" style="color: #6E1919;">   Hello, <?php echo $_SESSION['student_id'].'!'; ?> </h3>
+                          <h3 align="left" style="color: #990000;">   Hello, <?php echo $_SESSION['full_name'].'!'; ?> </h3>
                                 <h2 class="text-white text-uppercase ls-2 mb-4 text-white font-weight-700" style="color: #2F4F4F;">
                                  FEPS KUPTM</h2>
                               
@@ -169,8 +169,8 @@
                 <div id="result">
 
 
-                  <table class="table" border="3px" style="background-color: #74493F;">
-                  <thead>
+                  <table class="table" border="3px">
+                  <thead  style="color:#666666; background-color: #FEBE88;">
                     <tr id="table_text">
                      
                      <!--  <th><a href="<?php echo base_url('home/searchOrderByTitle'); ?>">Title</th>
@@ -227,8 +227,8 @@
         </section>
 
 <br><br>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
 <script type="text/javascript">
    
     $(document).ready(function(){
